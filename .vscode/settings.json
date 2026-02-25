@@ -1,0 +1,31 @@
+{
+    "clangd.checkUpdates": true,
+    "clangd.arguments": [
+        "--compile-commands-dir=build",
+        "--experimental-modules-support"
+    ],
+    // 指定使用 LLDB 作为默认调试器
+    "cmake.debugConfig": {
+        "type": "lldb",
+        "program": "${command:cmake.launchTargetPath}",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "lldb"
+    },
+    // CMake Tools 相关设置
+    "cmake.defaultVariants": {
+        "buildType": {
+            "default": "debug",
+            "description": "The build type to use"
+        }
+    },
+    "cmake.configureArgs": [
+        "-DCMAKE_TOOLCHAIN_FILE=$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    ],
+    "editor.formatOnSave": true,
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+}
