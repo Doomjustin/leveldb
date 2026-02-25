@@ -1,0 +1,3 @@
+[submodule "third_party/xin"]
+	path = third_party/xin
+	url = git@github.com:Doomjustin/xin.git

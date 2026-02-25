@@ -8,10 +8,14 @@ UseTab: Never
 IndentCaseLabels: false
 # 函数体的左大括号不换行
 BreakBeforeBraces: Stroustrup
-# 代码行长度限制为100
-ColumnLimit: 100
+# 代码行长度限制为120
+ColumnLimit: 120
+DerivePointerAlignment: false
+PointerAlignment: Left
 # 模板声明换行设置
 BreakTemplateDeclarations: Yes
+# 模板关键字后不添加空格（如 template<typename T>）
+SpaceAfterTemplateKeyword: false
 
 BreakConstructorInitializers: BeforeComma
 Cpp11BracedListStyle: false
@@ -31,7 +35,7 @@ IncludeCategories:
     CaseSensitive: false
     
   # C++ 标准库头文件
-  - Regex: '^<(algorithm|array|atomic|bitset|cstddef|cstdint|charconv|chrono|codecvt|compare|complex|concepts|condition_variable|coroutine|deque|exception|execution|filesystem|format|forward_list|fstream|functional|future|initializer_list|iomanip|ios|iosfwd|iostream|istream|iterator|limits|list|locale|map|memory|memory_resource|mutex|new|numbers|numeric|optional|ostream|queue|random|ranges|ratio|regex|scoped_allocator|set|shared_mutex|source_location|span|sstream|stack|stdexcept|stop_token|streambuf|string|string_view|strstream|syncstream|system_error|thread|tuple|type_traits|typeindex|typeinfo|unordered_map|unordered_set|utility|valarray|variant|vector|version)>'
+  - Regex: '^<(algorithm|array|atomic|bitset|cstdlib|cerrno|cassert|cstddef|cstdint|charconv|chrono|codecvt|compare|complex|concepts|condition_variable|coroutine|deque|exception|expected|execution|filesystem|format|forward_list|fstream|functional|future|initializer_list|iomanip|ios|iosfwd|iostream|istream|iterator|limits|list|locale|map|memory|memory_resource|mutex|new|numbers|numeric|optional|ostream|queue|random|ranges|ratio|regex|scoped_allocator|set|shared_mutex|source_location|span|sstream|stack|stdexcept|stop_token|streambuf|string|string_view|strstream|syncstream|system_error|thread|tuple|type_traits|typeindex|typeinfo|unordered_map|unordered_set|utility|valarray|variant|vector|version)>'
     Priority: 5
     CaseSensitive: false
   
@@ -55,5 +59,5 @@ IncludeCategories:
     Priority: 2
     CaseSensitive: false
 
-# 主头文件识别模式
-IncludeIsMainRegex: '([-_](test|unittest))?$'
+# 主头文件识别模式（支持 xxx.cpp 与 xxx.test.cpp）
+IncludeIsMainRegex: '(\\.test)?$'
