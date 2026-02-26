@@ -41,7 +41,20 @@ public:
     [[nodiscard]]
     auto get(std::string_view key, sequence_number seq) const -> std::expected<std::string, Status>
     {
-        auto iter = table_.seek(pack_key(seq, ValueType::Value, key));
+        key_type lookup_key{ std::pmr::new_delete_resource() };
+        std::stringstream ss{ lookup_key };
+
+        // key_size + tag size
+        varint::encode(ss, key.size() + 8);
+        ss << key;
+        // tag
+        fixed::encode(ss, (seq << 8) | static_cast<std::uint64_t>(ValueType::Value));
+        // value_size
+        varint::encode(ss, 0);
+
+        lookup_key = ss.str();
+
+        auto iter = table_.seek(lookup_key);
         if (iter == table_.end())
             return std::unexpected(Status::NotFound("{}", key));
 
@@ -68,9 +81,9 @@ private:
         std::string user_key;
         std::string value;
 
-        static auto extract(const key_type& internal_key) -> InternalKey
+        static auto extract(std::string_view internal_key) -> InternalKey
         {
-            std::stringstream ss{ internal_key };
+            std::stringstream ss{ std::string{ internal_key } };
 
             auto key_size = varint::decode<std::size_t>(ss);
             InternalKey result{};
@@ -90,7 +103,7 @@ private:
     struct PackedKeyComparator {
         comparator_type user_key_comparator;
 
-        auto operator()(const key_type& a, const key_type& b) const -> bool
+        auto operator()(std::string_view a, std::string_view b) const -> bool
         {
             auto [tag_a, user_key_a, value_a] = InternalKey::extract(a);
             auto [tag_b, user_key_b, value_b] = InternalKey::extract(b);
@@ -107,15 +120,15 @@ private:
     using table = SkipList<key_type, PackedKeyComparator>;
 
     Comparator comparator_;
-    mutable memory_resource memory_resource_;
+    memory_resource memory_resource_;
     table table_{ &memory_resource_ };
 
     void add(sequence_number seq, ValueType type, std::string_view key, std::string_view value = {})
     {
-        table_.insert(pack_key(seq, type, key, value));
+        table_.insert(pack_key_value(seq, type, key, value));
     }
 
-    auto pack_key(sequence_number seq, ValueType type, std::string_view key, std::string_view value = {}) const
+    auto pack_key_value(sequence_number seq, ValueType type, std::string_view key, std::string_view value = {})
         -> key_type
     {
         // Format of an entry is concatenation of:
@@ -124,7 +137,6 @@ private:
         //  tag          : uint64((sequence << 8) | type)
         //  value_size   : varint32 of value.size()
         //  value bytes  : char[value.size()]
-
         key_type internal_key{ &memory_resource_ };
         std::stringstream ss{ internal_key };
 

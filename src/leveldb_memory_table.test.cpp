@@ -165,8 +165,7 @@ TEST_SUITE("[memory_table]")
         memory_table.add(7, "k");
 
         auto result = memory_table.get("k", 7);
-        REQUIRE_FALSE(result.has_value());
         // 所以这里的false是符合预期的
-        REQUIRE_FALSE(result.error().not_found());
+        REQUIRE(result);
     }
 }
