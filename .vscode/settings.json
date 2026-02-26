@@ -80,6 +80,7 @@
         "typeinfo",
         "uchar",
         "unistd",
+        "unsynchronized",
         "utime",
         "utmp",
         "valarray",

@@ -5,6 +5,14 @@ project(CppTemplate
     LANGUAGES C CXX
 )
 
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
 include(CTest)
 include(CMakeDependentOption)
 
@@ -26,5 +34,7 @@ include(CopyResources)
 find_package(fmt CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(doctest CONFIG REQUIRED)
+
+add_subdirectory(third_party/xin)
 
 add_subdirectory(src)
