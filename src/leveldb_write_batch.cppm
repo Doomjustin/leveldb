@@ -8,17 +8,16 @@ module;
 
 export module leveldb.write_batch;
 
+import leveldb.common;
 import xin.base.coding;
 
 using namespace xin::base;
 
 namespace leveldb {
 
-export enum class ValueType : std::uint8_t { Deletion = 0b0, Value = 0b1 };
-
 export class WriteBatch {
 public:
-    using sequence_number = std::uint64_t;
+    using sequence_number = SequenceNumber;
     using count_type = int;
     using size_type = std::size_t;
 

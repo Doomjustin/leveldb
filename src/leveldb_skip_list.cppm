@@ -15,7 +15,8 @@ using namespace xin::base;
 
 namespace leveldb {
 
-template<typename Key, typename Comparator = std::less<Key>, std::size_t MaxHeight = 12, float Probability = 0.25F>
+export template<typename Key, typename Comparator = std::less<Key>, std::size_t MaxHeight = 12,
+                float Probability = 0.25F>
 class SkipList {
 public:
     template<typename T>
@@ -213,6 +214,10 @@ public:
     auto begin() -> Iterator { return Iterator{ head_->next(0), this }; }
 
     auto end() -> Iterator { return Iterator{ nullptr, this }; }
+
+    auto begin() const -> Iterator { return Iterator{ head_->next(0), this }; }
+
+    auto end() const -> Iterator { return Iterator{ nullptr, this }; }
 
     auto front() const -> const key_type&
     {
