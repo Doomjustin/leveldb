@@ -2,7 +2,6 @@
     "clangd.checkUpdates": true,
     "clangd.arguments": [
         "--compile-commands-dir=build",
-        "--experimental-modules-support"
     ],
     // 指定使用 LLDB 作为默认调试器
     "cmake.debugConfig": {

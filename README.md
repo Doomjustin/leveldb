@@ -9,6 +9,11 @@
 4. 文件名必须是{project_name}_{component_name}.cppm 的形式，其中project固定为leveldb
 5. 每一个cppm都是一个组件单元
 
-## dependency
+## 依赖
 1. xin::base: 我自己写的组件库，提供了一些很通用的小组件(通过git submodule引入)
 2. doctest: 作为单体测试组件(通过vcpkg引入)
+
+## 进度
+1. [x] skip list
+2. [x] write batch
+3. [ ] memory table iterator未完成

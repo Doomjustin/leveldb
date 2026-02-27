@@ -165,7 +165,7 @@ TEST_SUITE("[memory_table]")
         memory_table.add(7, "k");
 
         auto result = memory_table.get("k", 7);
-        // 所以这里的false是符合预期的
+        // 所以拿到了值是符合预期的
         REQUIRE(result);
     }
 }

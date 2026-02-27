@@ -75,6 +75,10 @@ public:
         add(seq, ValueType::Value, key, value);
     }
 
+    class Iterator {
+
+    };
+
 private:
     struct InternalKey {
         std::uint64_t tag;
